@@ -6,15 +6,15 @@ const options = [
     value: '',
   },
   {
-    label: 'idea',
+    label: 'ideas',
     value: 'idea',
   },
   {
-    label: 'travel',
+    label: 'travels',
     value: 'travel',
   },
   {
-    label: 'teach_or_explain',
+    label: 'teach_or_explains',
     value: 'teach_or_explain',
   },
   {
@@ -22,19 +22,19 @@ const options = [
     value: 'write',
   },
   {
-    label: 'shop',
+    label: 'shops',
     value: 'shop',
   },
   {
-    label: 'code',
+    label: 'codes',
     value: 'code',
   },
   {
-    label: 'misc',
+    label: 'miscs',
     value: 'misc',
   },
   {
-    label: 'roleplay',
+    label: 'roleplays',
     value: 'roleplay',
   },
   {

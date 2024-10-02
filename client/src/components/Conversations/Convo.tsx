@@ -16,6 +16,7 @@ import DeleteButton from './DeleteButton';
 import RenameButton from './RenameButton';
 import HoverToggle from './HoverToggle';
 import ShareButton from './ShareButton';
+import CategoryDropdown from './categories';
 import { cn } from '~/utils';
 import store from '~/store';
 
@@ -31,11 +32,12 @@ export default function Conversation({ conversation, retainView, toggleNav, isLa
   const { data: startupConfig } = useGetStartupConfig();
   const { refreshConversations } = useConversations();
   const { showToast } = useToastContext();
-  const { conversationId, title } = conversation;
+  const { conversationId, title, model } = conversation;
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [titleInput, setTitleInput] = useState(title);
   const [renaming, setRenaming] = useState(false);
   const [isPopoverActive, setIsPopoverActive] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const clickHandler = async (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (event.button === 0 && (event.ctrlKey || event.metaKey)) {
@@ -98,6 +100,11 @@ export default function Conversation({ conversation, retainView, toggleNav, isLa
       onRename(e);
     }
   };
+  const handleCategorySelection = (category: string) => {
+    setSelectedCategory(category);
+    console.log(`Selected category: ${category}`);
+    updateConvoMutation.mutate({ conversationId, model: category.toLowerCase() });
+  };
 
   const isActiveConvo =
     currentConvoId === conversationId ||
@@ -137,7 +144,21 @@ export default function Conversation({ conversation, retainView, toggleNav, isLa
                 setPopoverActive={setIsPopoverActive}
               />
             )}
-
+            <CategoryDropdown
+              selectedCategory={selectedCategory}
+              setSelectedCategory={handleCategorySelection}
+            />
+            {model && (
+              <div className="m-1.5 flex items-center justify-between rounded bg-blue-100 px-2 py-1 text-sm text-blue-800">
+                <span>{model}</span>
+                <button
+                  onClick={() => handleCategorySelection('')}
+                  className="ml-2 text-blue-600 hover:text-blue-800 focus:outline-none"
+                >
+                  ×
+                </button>
+              </div>
+            )}
             <RenameButton
               renaming={renaming}
               onRename={onRename}

@@ -20,7 +20,7 @@ const routes = require('./routes');
 
 const { PORT, HOST, ALLOW_SOCIAL_LOGIN } = process.env ?? {};
 
-const port = Number(PORT) || 3080;
+const port = Number(PORT) || 3081;
 const host = HOST || 'localhost';
 
 const startServer = async () => {
@@ -70,7 +70,6 @@ const startServer = async () => {
   }
 
   app.use('/oauth', routes.oauth);
-  // API Endpoints
   app.use('/api/auth', routes.auth);
   app.use('/api/keys', routes.keys);
   app.use('/api/user', routes.user);
@@ -96,6 +95,8 @@ const startServer = async () => {
 
   app.use((req, res) => {
     res.sendFile(path.join(app.locals.paths.dist, 'index.html'));
+    console.log('index.html');
+    console.log(path.join(app.locals.paths.dist, 'index.html'));
   });
 
   app.listen(port, host, () => {

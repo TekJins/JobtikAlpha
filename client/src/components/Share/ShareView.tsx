@@ -29,7 +29,7 @@ function SharedView() {
               </div>
             ) : data && messagesTree && messagesTree.length !== 0 ? (
               <>
-                <div className="final-completion group mx-auto flex min-w-[40rem] flex-col gap-3 pb-6 pt-4 md:max-w-3xl md:px-5 lg:max-w-[40rem] lg:px-1 xl:max-w-[48rem] xl:px-5">
+                <div className="final-completion group mx-auto flex min-w-[40rem] flex-col gap-3 pb-6 pt-4 md:max-w-3xl md:px-5 lg:max-w-[40rem] lg:px-1 xl:max-w-[68rem] xl:px-5">
                   <h1 className="text-4xl font-bold dark:text-white">{data.title}</h1>
                   <div className="border-b pb-6 text-base text-gray-300">
                     {new Date(data.createdAt).toLocaleDateString('en-US', {

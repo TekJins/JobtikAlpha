@@ -13,12 +13,16 @@ const defaultInterface = getConfigDefaults().interface;
 
 export default function Presentation({
   children,
+  query,
+  setQuery,
   useSidePanel = false,
   panel,
 }: {
   children: React.ReactNode;
   panel?: React.ReactNode;
   useSidePanel?: boolean;
+  query: string;
+  setQuery: (value: string) => void;
 }) {
   const { data: startupConfig } = useGetStartupConfig();
   const hideSidePanel = useRecoilValue(store.hideSidePanel);
@@ -89,6 +93,8 @@ export default function Presentation({
           defaultLayout={defaultLayout}
           defaultCollapsed={defaultCollapsed}
           fullPanelCollapse={fullCollapse}
+          query={query}
+          setQuery={setQuery}
         >
           <div className="flex h-full flex-col" role="presentation" tabIndex={0}>
             {children}

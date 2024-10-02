@@ -27,7 +27,7 @@ export default function List({
 
   return (
     <div className="flex h-full flex-col">
-      {hasCreateAccess && (
+      {/* {hasCreateAccess && (
         <div className="flex w-full justify-end">
           <Button
             variant="outline"
@@ -37,7 +37,7 @@ export default function List({
             + {localize('com_ui_create_prompt')}
           </Button>
         </div>
-      )}
+      )} */}
       <div className="flex-grow overflow-y-auto">
         <div className="overflow-y-auto">
           {isLoading && isChatRoute && (

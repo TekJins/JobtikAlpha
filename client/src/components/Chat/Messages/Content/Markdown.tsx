@@ -106,7 +106,7 @@ export const a = memo(({ href, children }: { href: string; children: React.React
 });
 
 export const p = memo(({ children }: { children: React.ReactNode }) => {
-  return <p className="mb-2 whitespace-pre-wrap">{children}</p>;
+  return <p className="message-content mb-2 whitespace-pre-wrap text-2xl">{children}</p>;
 });
 
 const cursor = ' ';

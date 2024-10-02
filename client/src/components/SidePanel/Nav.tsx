@@ -7,7 +7,14 @@ import { buttonVariants } from '~/components/ui/Button';
 import { cn, removeFocusOutlines } from '~/utils';
 import { useLocalize } from '~/hooks';
 
-export default function Nav({ links, isCollapsed, resize, defaultActive }: NavProps) {
+export default function Nav({
+  links,
+  isCollapsed,
+  resize,
+  defaultActive,
+  setQuery,
+  query,
+}: NavProps) {
   const localize = useLocalize();
   const [active, _setActive] = useState<string | undefined>(defaultActive);
   const getVariant = (link: NavLink) => (link.id === active ? 'default' : 'ghost');
@@ -111,7 +118,11 @@ export default function Nav({ links, isCollapsed, resize, defaultActive }: NavPr
                           </AccordionPrimitive.Trigger>
                         </AccordionPrimitive.Header>
 
-                        <AccordionContent className="w-full dark:text-white">
+                        <AccordionContent
+                          className="w-full dark:text-white"
+                          query={query}
+                          setQuery={setQuery}
+                        >
                           {link.Component && <link.Component />}
                         </AccordionContent>
                       </AccordionItem>

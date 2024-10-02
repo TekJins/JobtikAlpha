@@ -47,7 +47,7 @@ export default function Footer({ className }: { className?: string }) {
       : '[LibreChat ' +
         Constants.VERSION +
         '](https://librechat.ai) - ' +
-        localize('com_ui_latest_footer')
+        localize('com_ui_latest_footer' + 'Generation Prompt')
   ).split('|');
 
   const mainContentRender = mainContentParts.map((text, index) => (
@@ -93,6 +93,7 @@ export default function Footer({ className }: { className?: string }) {
             {!isLastElement && (
               <div key={`separator-${index}`} className="h-2 border-r-[1px] border-gray-300" />
             )}
+            <h1>Generation Prompt</h1>
           </React.Fragment>
         );
       })}

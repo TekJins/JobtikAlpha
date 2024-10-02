@@ -17,6 +17,7 @@ import { useChatContext } from '~/Providers';
 import Switcher from './Switcher';
 import { cn } from '~/utils';
 import Nav from './Nav';
+import SpeechToText from './sp';
 
 interface SidePanelProps {
   defaultLayout?: number[] | undefined;
@@ -24,6 +25,8 @@ interface SidePanelProps {
   navCollapsedSize?: number;
   fullPanelCollapse?: boolean;
   children: React.ReactNode;
+  query: string;
+  setQuery: (value: string) => void;
 }
 
 const defaultMinSize = 20;
@@ -35,6 +38,8 @@ const SidePanel = ({
   fullPanelCollapse = false,
   navCollapsedSize = 3,
   children,
+  query,
+  setQuery,
 }: SidePanelProps) => {
   const [isHovering, setIsHovering] = useState(false);
   const [minSize, setMinSize] = useState(defaultMinSize);
@@ -206,11 +211,17 @@ const SidePanel = ({
                 />
               </div>
             )}
+            <div className="mt-4">
+              <SpeechToText query={query} setQuery={setQuery} />
+            </div>
+
             <Nav
               resize={panelRef.current?.resize}
               isCollapsed={isCollapsed}
               defaultActive={defaultActive}
               links={Links}
+              setQuery={setQuery}
+              query={query}
             />
           </ResizablePanel>
         </ResizablePanelGroup>

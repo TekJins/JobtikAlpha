@@ -1,4 +1,4 @@
-import { memo, useRef, useMemo } from 'react';
+import { memo, useRef, useMemo, useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   supportsFiles,
@@ -34,7 +34,7 @@ import FileRow from './Files/FileRow';
 import Mention from './Mention';
 import store from '~/store';
 
-const ChatForm = ({ index = 0 }) => {
+const ChatForm = ({ index = 0, query = '', setQuery }) => {
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
@@ -117,9 +117,21 @@ const ChatForm = ({ index = 0 }) => {
   const { ref, ...registerProps } = methods.register('text', {
     required: true,
     onChange: (e) => {
+      console.log(e.target.value);
       methods.setValue('text', e.target.value, { shouldValidate: true });
     },
   });
+
+  useEffect(() => {
+    if (query) {
+      methods.setValue('text', query);
+    }
+  }, [query, methods]);
+
+  const clearQuery = () => {
+    methods.setValue('text', '');
+    setQuery('');
+  };
 
   return (
     <form
@@ -212,13 +224,35 @@ const ChatForm = ({ index = 0 }) => {
               )
             )}
             {SpeechToText && (
-              <AudioRecorder
-                disabled={!!disableInputs}
-                textAreaRef={textAreaRef}
-                ask={submitMessage}
-                isRTL={isRTL}
-                methods={methods}
-              />
+              <div className="right-2 flex items-center">
+                <button
+                  type="button"
+                  onClick={clearQuery}
+                  className="ml-2 p-1 text-gray-500 hover:text-gray-700"
+                  aria-label="Clear input"
+                  style={{ position: 'absolute', right: '4.5rem', top: '0.6rem' }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+                <AudioRecorder
+                  disabled={!!disableInputs}
+                  textAreaRef={textAreaRef}
+                  ask={submitMessage}
+                  isRTL={isRTL}
+                  methods={methods}
+                />
+              </div>
             )}
             {TextToSpeech && automaticPlayback && <StreamAudio index={index} />}
           </div>

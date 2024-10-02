@@ -100,5 +100,8 @@
       "admin/",
       "packages/"
     ]
+  },
+  "dependencies": {
+    "downshift": "^9.0.8"
   }
 }

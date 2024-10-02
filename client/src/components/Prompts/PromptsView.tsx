@@ -7,6 +7,7 @@ import DashBreadcrumb from '~/routes/Layouts/DashBreadcrumb';
 import { usePromptGroupsNav, useHasAccess } from '~/hooks';
 import GroupSidePanel from './Groups/GroupSidePanel';
 import { cn } from '~/utils';
+import { PlusIcon } from '@radix-ui/react-icons';
 
 export default function PromptsView() {
   const params = useParams();
@@ -42,6 +43,12 @@ export default function PromptsView() {
           <div className="mx-2 mt-1 flex flex-row items-center justify-between">
             <FilterPrompts setName={groupsNav.setName} />
             <AutoSendPrompt className="text-xs dark:text-white" />
+            <span
+              className="ml-2 cursor-pointer rounded border border-gray-300 p-1 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700"
+              onClick={() => navigate('/d/prompts/new')}
+            >
+              <PlusIcon className="h-4 w-4" />
+            </span>
           </div>
         </GroupSidePanel>
         <div

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
@@ -15,11 +15,16 @@ import Landing from './Landing';
 import Header from './Header';
 import Footer from './Footer';
 import store from '~/store';
+import { set } from 'date-fns';
 
 function ChatView({ index = 0 }: { index?: number }) {
   const { conversationId } = useParams();
-  const rootSubmission = useRecoilValue(store.submissionByIndex(index));
-  const addedSubmission = useRecoilValue(store.submissionByIndex(index + 1));
+  // useRecoilValue is a hook from the Recoil library that retrieves the current value of a Recoil state
+  // It's used here to get the submission states for the root and added chat contexts
+  // store.submissionByIndex is likely an atom or selector that holds submission data for different chat indices
+  const rootSubmission = useRecoilValue(store.submissionByIndex(index)); // Get submission state for the current chat
+  const addedSubmission = useRecoilValue(store.submissionByIndex(index + 1)); // Get submission state for the next chat index
+  const [query, setQuery] = useState(''); // Use useState for query state
 
   const fileMap = useFileMapContext();
 
@@ -45,7 +50,7 @@ function ChatView({ index = 0 }: { index?: number }) {
     <ChatFormProvider {...methods}>
       <ChatContext.Provider value={chatHelpers}>
         <AddedChatContext.Provider value={addedChatHelpers}>
-          <Presentation useSidePanel={true}>
+          <Presentation useSidePanel={true} query={query} setQuery={setQuery}>
             {isLoading && conversationId !== 'new' ? (
               <div className="flex h-screen items-center justify-center">
                 <Spinner className="opacity-0" />
@@ -56,7 +61,7 @@ function ChatView({ index = 0 }: { index?: number }) {
               <Landing Header={<Header />} />
             )}
             <div className="w-full border-t-0 pl-0 pt-2 dark:border-white/20 md:w-[calc(100%-.5rem)] md:border-t-0 md:border-transparent md:pl-0 md:pt-0 md:dark:border-transparent">
-              <ChatForm index={index} />
+              <ChatForm index={index} query={query} setQuery={setQuery} />
               <Footer />
             </div>
           </Presentation>
